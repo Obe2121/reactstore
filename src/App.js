@@ -103,33 +103,33 @@ addToUserCart = (item) =>{
 
           
 
-          <Route path='/' element={
+          <Route exact path='/' element={
             <ProtectedRoute token={this.state.token}>
               <Home token={this.state.token} setToken={this.setToken}/>
             </ProtectedRoute>
             }/>
 
-            <Route path = '/cart' element={
+            <Route exact path = '/cart' element={
             <ProtectedRoute token={this.state.token}>
             <Cart cart={this.state.cart} cartTotal={this.state.cartTotal}/>
             </ProtectedRoute>
           }/> 
 
 
-            <Route path='/shop' element={
+            <Route exact path='/shop' element={
             <ProtectedRoute token={this.state.token}>
               <Shop/>
             </ProtectedRoute>
             }/>
 
-            <Route path='/item/:id' element={
+            <Route exact path='/item/:id' element={
             <ProtectedRoute token={this.state.token} addToUserCart={this.addToUserCart}>
               <SingleItem />
             </ProtectedRoute>
             }/>
 
 
-          <Route path='/logout' element={
+          <Route exact path='/logout' element={
             <ProtectedRoute token={this.state.token}>
               <Logout setToken={this.setToken}/>
             </ProtectedRoute>
@@ -137,7 +137,7 @@ addToUserCart = (item) =>{
 
           
 
-            <Route path = '/login' element={
+            <Route exact path = '/login' element={
               <Login setToken={this.setToken} token={this.state.token} setName={this.setName}/>
             }/>
           </Routes>

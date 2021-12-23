@@ -13,20 +13,20 @@ export default class SingleItem extends Component {
         this.getSingleItem()
     }
 
-//     getSingleItem = async () =>{
+//     getSingleItem = async (token, id) =>{
   //       const item = await getItem(localStorage.getItem('token'), this.props.match.params.id)
 //         if(item === 400){this.setState({tokenError:true})}
 //         if(item===500){this.setState({serverError:true})}
 //         if(item!==500 && item !==400){
 //             this.setState({item})
-//         }
-//     }
+  //       }
+ //    }
 
     render() {
         return (
             <div>
                 {
-                    this.state.item ? 
+                    this.state.item ?  
                         <ItemCard item={this.state.item}/>
                         :
                         ''

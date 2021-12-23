@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row, Button} from 'react-bootstrap'
 import ItemCard from '../components/ItemCard'
 import axios from 'axios';
 import {titleCase} from '../helpers'
 
 
-class Home extends Component {
+
+class Shop extends Component {
     constructor() {
         super();
         this.state={
@@ -20,6 +21,12 @@ class Home extends Component {
     componentDidMount() {
         this.getAllCats();
         this.getAllItems();
+    }
+    getItems = async (id) =>{
+        await axios.get(`https://fakestoreapi.com/products/${id}`)
+        .then(response=>{
+            this.setState({categories:response.data})
+        });
     }
 
     getAllCats = async () =>{
@@ -82,6 +89,12 @@ class Home extends Component {
         .then(json=>console.log(json))
         .then(()=>console.log(`Item number ${id} deleted.`))
     }
+    addToUserCart = (id) => {
+        axios.add(`https://fakestoreapi.com/products/${id}`)
+        .then(res=>res.data)
+        .then(json=>console.log(json))
+        .then(()=>console.log(`Item number ${id} added to cart`))
+    }
 
 
     render() {
@@ -123,10 +136,6 @@ class Home extends Component {
                                 </li>
                             )}
 
-<li>
-                                <a href="/createCats"><button  style={{margin:"5px 0px", color:"green"}} variant="info" >Create New Item</button></a>
-
-                            </li>
 
                         </ul>
                     </Col>
@@ -134,11 +143,12 @@ class Home extends Component {
                         
                         <Row>
                             {this.state.items.slice(this.state.itemStart,this.state.itemEnd)
-                                .map((i)=><ItemCard item={i} key={i.id} addToUserCart={this.props.addToUserCart} goToEditItem={this.goToEditItem} deleteItem={this.deleteItem}/>)}
+                                .map((i)=><ItemCard item={i} key={i.id} addToUserCart={this.addToUserCart} goToEditItem={this.goToEditItem} deleteItem={this.deleteItem}/>)}
                         </Row>
                         <div className="d-flex justify-content-center">
-                            {/* <Button variant="danger" className={(this.state.itemStart===0?"disabled":'')} onClick={()=>this.handlePrev()}>{"<< Prev"}</Button>
-                            <Button variant="success" className={(this.state.items?.length<=this.state.itemEnd?"disabled":'')} onClick={()=>this.handleNext()}>{"Next >>"}</Button> */}
+                            <Button variant="danger" className={"me-2" + (this.state.itemStart===0?"disabled":'')} onClick={()=>this.handlePrev()}>{"<< Prev"}</Button>
+
+                            <Button variant="success" className={(this.state.items?.length<=this.state.itemEnd?"disabled":'')} onClick={()=>this.handleNext()}>{"Next >>"}</Button> 
                         </div>
                     </Col>
 
@@ -150,4 +160,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Shop;
